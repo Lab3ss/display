@@ -1,0 +1,21 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "Display API",
+  "main": "index.js",
+  "dependencies": {
+    "config": "^3.3.1",
+    "express": "^4.17.1",
+    "moment": "^2.28.0",
+    "open-graph-scraper": "^4.6.0",
+    "redis": "^3.0.2",
+    "rss-to-json": "^1.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "yarn && nodemon src/index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
