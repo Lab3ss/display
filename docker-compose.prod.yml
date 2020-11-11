@@ -1,0 +1,48 @@
+version: "3.7"
+services:
+
+  nginx:
+    image: nginx
+    volumes:
+      - ./nginx/templates/prod:/etc/nginx/templates
+      - ./front/display/build:/usr/share/nginx/html
+    ports:
+      - "80:80"
+    environment:
+      - API_PORT=4000
+      - FRONT_PORT=8080
+    networks:
+      - net1
+
+  redis:
+    image: redis:alpine
+    expose:
+      - "6379"
+    networks:
+      - net1
+
+  api:
+    build: ./api
+    environment:
+      - NODE_ENV=production
+      - PORT=4000
+    networks:
+      - net1
+    volumes:
+      - ./api:/home/node/app
+    command: bash -c "yarn && yarn start"
+
+  front:
+    build: ./front
+    environment:
+      - NODE_ENV=production
+      - PORT=8080
+    volumes:
+      - ./front:/home/node/app
+    networks:
+      - net1
+    command: bash -c "cd display && yarn && yarn build"
+    stdin_open: true
+
+networks:
+  net1:

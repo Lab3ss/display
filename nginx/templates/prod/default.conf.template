@@ -1,0 +1,14 @@
+server {
+    listen       80;
+    listen  [::]:80;
+    server_name  localhost;
+
+    location /api {
+        rewrite   /api/(.*) /$1 break;
+        proxy_pass    http://api:${API_PORT};
+    }
+
+    location / {
+        root /usr/share/nginx/html;
+    }
+}
