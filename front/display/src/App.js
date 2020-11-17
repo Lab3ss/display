@@ -38,12 +38,14 @@ const xNb$ = windowSize$.pipe(
   map(([width]) =>
     Math.floor((width - BORDER_SIZE) / (MIN_WIDTH + BORDER_SIZE))
   ),
+  map(nb => nb <= 0 ? 1 : nb),
   distinctUntilChanged()
 );
 const yNb$ = windowSize$.pipe(
   map(([_, height]) =>
     Math.floor((height - BORDER_SIZE) / (MIN_HEIGHT + BORDER_SIZE))
   ),
+  map(nb => nb <= 0 ? 1 : nb),
   distinctUntilChanged()
 );
 
@@ -99,7 +101,7 @@ const computeDisappear = () => {
 const disappear$ = interval(REFRESH_ITEM_DELAY).pipe(
   map(plusTwo),
   startWith(1),
-  delay(REFRESH_ITEM_DELAY - 2 * 1000),
+  delay(REFRESH_ITEM_DELAY - 1 * 1000),
   filter(itemsNotEmpty),
   map(computeDisappear)
 );

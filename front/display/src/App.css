@@ -68,14 +68,14 @@
 .appear {
   opacity: 0;
   animation-name: animation-appear;
-  animation-duration: 2s;
+  animation-duration: 1s;
   animation-fill-mode: forwards;
 }
 
 .disappear {
   opacity: 1;
   animation-name: animation-disappear;
-  animation-duration: 2s;
+  animation-duration: 1s;
   animation-fill-mode: forwards;
 }
 
