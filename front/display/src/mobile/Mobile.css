@@ -1,0 +1,154 @@
+.App {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.left-color {
+  color: rgb(255, 176, 65);
+}
+.right-color {
+  color: #58D68D;
+}
+.top-color {
+  color: #2E86C1;
+}
+.loading {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.loading .me {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading .me img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid #748199;
+}
+
+.loading .rules {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 2em;
+  padding: 16px;
+}
+.loading .rules ul li span {
+  font-weight: bold;
+}
+
+.loading .action {
+  flex: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading .action input.start {
+  background-color: rgba(0, 0, 0, 0);
+  padding: 6px 12px;
+  border: 2px solid #748199;
+  color: #eee;
+  font-size: 1.2em;
+  font-family: "Raleway", sans-serif;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.left-swipping-indicator {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  width: 1px;
+  background-color: rgb(255, 176, 65);
+  box-shadow:1px 0px 3px 3px rgb(255, 176, 65);
+}
+
+.right-swipping-indicator {
+  position: fixed;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  width: 1px;
+  background-color: #58D68D;
+  box-shadow:-1px 0px 3px 3px #58D68D;
+}
+
+.item {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #30353f;
+}
+
+.item-picture {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  background-position: center center;
+  background-size: cover;
+}
+
+.item-content {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+}
+
+.item-title {
+  flex: 1;
+  display: flex;
+  padding: 12px;
+  align-items: center;
+  text-align: center;
+  font-size: 1.2em;
+  background-color: rgba(48, 53, 63, 0.85);
+}
+
+.item-title a {
+  text-decoration: none;
+  color: white;
+}
+
+.item-description {
+  display: flex;
+  color: rgb(145, 161, 191);
+  align-items: center;
+  text-align: justify;
+  flex: 3;
+  font-size: 0.9em;
+}
+
+.item-meta {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: rgb(140, 154, 183);
+  font-size: 0.9em;
+}
+
+.item-date {
+  text-align: left;
+}
+
+.item-author {
+  text-align: right;
+}
