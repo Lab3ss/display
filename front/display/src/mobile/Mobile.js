@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSwipeable } from "react-swipeable";
 import axios from "axios";
+import shuffle from '../common/helpers/shuffleArray';
 import "./Mobile.css";
 
 import loading from "./assets/loading.svg";
@@ -10,7 +11,6 @@ const FETCH_URL = "api/news";
 
 const DELTA_LEFT = 80;
 const DELTA_RIGHT = 80;
-const DELTA_TOP = 100;
 
 function App() {
   const [ready, setReady] = useState(false);
@@ -25,7 +25,7 @@ function App() {
     });
     axios.get(FETCH_URL).then(res => {
       if (res && res.status === 200 && res.data && res.data.length > 0) {
-        setItems(res.data);
+        setItems(shuffle(res.data));
       }
     });
   }, []);

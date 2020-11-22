@@ -13,6 +13,7 @@ import {
 } from "rxjs/operators";
 import "./Desktop.css";
 import logo from "./assets/loading.svg";
+import shuffle from '../common/helpers/shuffleArray';
 
 const MIN_HEIGHT = 360;
 const MIN_WIDTH = 480;
@@ -82,6 +83,7 @@ const fetchNews$ = interval(REFRESH_NEWS_DELAY).pipe(
   switchMap(fetchData),
   filter(httpResOk),
   map(httpData),
+  map(shuffle),
   tap(hardReset)
 );
 
@@ -163,34 +165,34 @@ function App() {
 
   function printItem(item) {
     return (
+      <div
+        onClick={handleClick(item)}
+        key={item.title}
+        style={{
+          width: itemSize[0] + "px",
+          height: itemSize[1] + "px"
+        }}
+        className={`item desktop ${item.disappear ? "disappear" : "appear"}`}
+      >
         <div
-          onClick={handleClick(item)}
-          key={item.title}
-          style={{
-            width: itemSize[0] + "px",
-            height: itemSize[1] + "px"
-          }}
-          className={`item desktop ${item.disappear ? "disappear" : "appear"}`}
+          className="item-picture"
+          style={{ backgroundImage: 'url("' + item.image + '")' }}
         >
-          <div
-            className="item-picture"
-            style={{ backgroundImage: 'url("' + item.image + '")' }}
-          >
-            <div style={{ flex: 2 }}></div>
-            <div className="item-title">{item.title}</div>
+          <div style={{ flex: 2 }}></div>
+          <div className="item-title">{item.title}</div>
+        </div>
+        <div className="item-content">
+          <div className="item-description">
+            {item.description && item.description.length > 250
+              ? item.description.substr(0, 250).concat("[...]")
+              : item.description}
           </div>
-          <div className="item-content">
-            <div className="item-description">
-              {item.description && item.description.length > 250
-                ? item.description.substr(0, 250).concat("[...]")
-                : item.description}
-            </div>
-            <div className="item-meta">
-              <div className="item-date">{item.date || ""}</div>
-              <div className="item-author">{item.source}</div>
-            </div>
+          <div className="item-meta">
+            <div className="item-date">{item.date || ""}</div>
+            <div className="item-author">{item.source}</div>
           </div>
         </div>
+      </div>
     );
   }
 

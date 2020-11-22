@@ -29,6 +29,10 @@ services:
       - net1
     volumes:
       - ./api:/home/node/app
+    expose:
+      - "4000"
+    ports:
+      - "4000:4000"
     command: bash -c "yarn && yarn start"
 
   front:
