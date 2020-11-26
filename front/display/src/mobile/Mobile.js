@@ -18,6 +18,8 @@ function App() {
   const [cursor, setCursor] = useState(0);
   const [opacityIndicatorLeft, setOpacityIndicatorLeft] = useState(0);
   const [opacityIndicatorRight, setOpacityIndicatorRight] = useState(0);
+  const [likes, setLikes] = useState({});
+  const [dislikes, setDislikes] = useState({});
 
   useEffect(() => {
     document.body.addEventListener("touchmove", function(e) {
@@ -56,12 +58,24 @@ function App() {
     onSwipedLeft: event => {
       setOpacityIndicatorLeft(0);
       if (event.absX >= DELTA_LEFT) {
+        const theme = items[cursor].theme;
+        if (dislikes[theme]) {
+          setDislikes({...dislikes, [theme]: dislikes[theme] + 1});
+        } else {
+          setDislikes({...dislikes, [theme]: 1});
+        }
         setCursor(cursor + 1);
       }
     },
     onSwipedRight: event => {
       setOpacityIndicatorRight(0);
       if (event.absX >= DELTA_RIGHT) {
+        const theme = items[cursor].theme;
+        if (likes[theme]) {
+          setLikes({...likes, [theme]: likes[theme] + 1});
+        } else {
+          setLikes({...likes, [theme]: 1});
+        }
         setCursor(cursor + 1);
       }
     }
@@ -89,7 +103,12 @@ function App() {
           </div>
           <div className="item-meta">
             <div className="item-date">{item.date || ""}</div>
-            <div className="item-author">{item.source}</div>
+            <div className="item-author">
+              {item.source}
+              { item.author && item.author !== item.source
+                ? `, ${item.author}`
+                : ""}
+            </div>
           </div>
         </div>
       </div>

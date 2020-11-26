@@ -20,6 +20,18 @@ services:
     networks:
       - net1
 
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: MisterFl0k
+      MONGO_INITDB_DATABASE: display
+    volumes:
+      - ./mongo/init:/docker-entrypoint-initdb.d
+    networks:
+      - net1
+
   api:
     build: ./api
     environment:

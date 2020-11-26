@@ -6,50 +6,24 @@ const redis = require("redis");
 const moment = require("moment");
 
 const { cleanHtml } = require("./utils");
+const Item = require('../schemas/Item');
 
 const redisClient = redis.createClient({ host: config.get("redis.host") });
 const getAsync = promisify(redisClient.get).bind(redisClient);
 const setAsync = promisify(redisClient.setex).bind(redisClient);
 
-function shuffle(array) {
-  var currentIndex = array.length,
-    temporaryValue,
-    randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}
-
-const parser = async (url, key, ttl, max, flush = false) => {
-  let data = await getAsync(key);
-
-  if (!flush && data) {
-    return JSON.parse(data);
-  }
-
+const parser = async ({ name, url }) =>{
   const json = await feed.load(url);
 
   if (!json || !json.items || json.items.length <= 0) {
-    throw new Error(`Unable to get ${key} RSS from ${url}`);
+    throw new Error(`Unable to get ${name} RSS from ${url}`);
   }
 
   // RSS does not provide some infos like picture url associated to the item.
   // => I get OpenGraph data from the url of each item returned by RSS to get more content.
   data = await Promise.all(
-    shuffle(json.items)
+      json.items
       .filter(item => item.url || item.link)
-      .slice(0, max)
       .map(item => og({ url: item.url || item.link }).catch(() => undefined))
   );
   // Remove items if item is undefined (Error getting og data)
@@ -60,11 +34,13 @@ const parser = async (url, key, ttl, max, flush = false) => {
       ({
         result: {
           ogSiteName,
+          ogType,
           ogTitle,
           ogDescription,
           ogUrl,
           ogImage,
           ogDate,
+          author,
           twitterTitle,
           twitterDescription,
           twitterUrl,
@@ -74,8 +50,10 @@ const parser = async (url, key, ttl, max, flush = false) => {
           articlePublishedTime
         }
       }) => ({
-        tag: key,
+        theme: name,
+        type: ogType,
         source: ogSiteName || twitterSite || twitterCreator,
+        author: author,
         title: ogTitle || twitterTitle,
         description: cleanHtml(ogDescription || twitterDescription),
         url: ogUrl || twitterUrl,
@@ -89,9 +67,8 @@ const parser = async (url, key, ttl, max, flush = false) => {
     )
     .filter(item => item.title && item.image && item.description && item.url);
 
-  await setAsync(key, ttl, JSON.stringify(data));
-
-  console.info(`${key} : LOADED`);
+  await Item.deleteMany({ theme: name });
+  await Item.insertMany(data);
 
   return data;
 };

@@ -3,61 +3,81 @@
     "host": "redis",
     "port": 6379
   },
+  "mongo": {
+    "host": "mongo",
+    "username": "floki",
+    "password": "MisterFl0k",
+    "database": "display",
+    "port": 27017
+  },
   "rss": {
-    "google": {
-      "url": "https://news.google.com/rss?hl=fr&gl=FR&ceid=FR:fr",
-      "key": "news.google",
-      "ttl": 7200
-    },
-    "geek": {
-      "url": "https://www.journaldugeek.com/feed/",
-      "key": "news.geek",
-      "ttl": 21600
-    },
-    "sport": {
-      "url": "https://rmcsport.bfmtv.com/rss/info/flux-rss/flux-toutes-les-actualites/",
-      "key": "news.sport",
-      "ttl": 14400
-    },
-    "sante": {
-      "url": "https://www.futura-sciences.com/rss/sante/actualites.xml",
-      "key": "news.sante",
-      "ttl": 14400
-    },
-    "environnement": {
-      "url": "https://www.futura-sciences.com/rss/environnement/actualites.xml",
-      "key": "news.environnement",
-      "ttl": 43200
-    },
-    "maison": {
-      "url": "https://www.futura-sciences.com/rss/maison/actualites.xml",
-      "key": "news.maison",
-      "ttl": 43200
-    },
-    "nature": {
-      "url": "https://www.futura-sciences.com/rss/nature/definitions.xml",
-      "key": "news.nature",
-      "ttl": 43200
-    },
-    "terre": {
-      "url": "https://www.futura-sciences.com/rss/terre/actualites.xml",
-      "key": "news.terre",
-      "ttl": 43200
-    },
-    "maths": {
-      "url": "https://www.futura-sciences.com/rss/mathematiques/actualites.xml",
-      "key": "news.maths",
-      "ttl": 43200
-    },
-    "matiere": {
-      "url": "https://www.futura-sciences.com/rss/matiere/definitions.xml",
-      "key": "news.matiere",
-      "ttl": 43200
-    },
-    "espace": {
-      "url": "https://www.futura-sciences.com/rss/espace/actualites.xml",
-      "key": "news.espace",
-      "ttl": 43200
-    }
-  } 
+    "sources": [
+      {
+        "name": "google",
+        "url": "https://news.google.com/rss?hl=fr&gl=FR&ceid=FR:fr",
+        "cron": "0 0 10,18 * * *",
+        "limit": 50
+      },
+      {
+        "name": "geek",
+        "url": "https://www.journaldugeek.com/feed/",
+        "cron": "0 0 10 * * *",
+        "limit": 20
+      },
+      {
+        "name": "sport",
+        "url": "https://rmcsport.bfmtv.com/rss/info/flux-rss/flux-toutes-les-actualites/",
+        "cron": "0 0 10 * * *",
+        "limit": 20
+      },
+      {
+        "name": "sante",
+        "url": "https://www.futura-sciences.com/rss/sante/actualites.xml",
+        "cron": "0 0 10 * * *",
+        "limit": 8
+      },
+      {
+        "name": "environnement",
+        "url": "https://www.futura-sciences.com/rss/environnement/actualites.xml",
+        "cron": "0 0 10 * * *",
+        "limit": 8
+      },
+      {
+        "name": "maison",
+        "url": "https://www.futura-sciences.com/rss/maison/actualites.xml",
+        "cron": "0 0 10 * * *",
+        "limit": 5
+      },
+      {
+        "name": "nature",
+        "url": "https://www.futura-sciences.com/rss/nature/definitions.xml",
+        "cron": "0 0 10 * * *",
+        "limit": 5
+      },
+      {
+        "name": "terre",
+        "url": "https://www.futura-sciences.com/rss/terre/actualites.xml",
+        "cron": "0 0 10 * * *",
+        "limit": 5
+      },
+      {
+        "name": "maths",
+        "url": "https://www.futura-sciences.com/rss/mathematiques/actualites.xml",
+        "cron": "0 0 10 * * *",
+        "limit": 3
+      },
+      {
+        "name": "matiere",
+        "url": "https://www.futura-sciences.com/rss/matiere/definitions.xml",
+        "cron": "0 0 10 * * *",
+        "limit": 3
+      },
+      {
+        "name": "espace",
+        "url": "https://www.futura-sciences.com/rss/espace/actualites.xml",
+        "cron": "0 0 10 * * *",
+        "limit": 5
+      }
+    ]
+  }
 }

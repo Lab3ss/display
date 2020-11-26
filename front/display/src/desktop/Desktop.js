@@ -13,7 +13,7 @@ import {
 } from "rxjs/operators";
 import "./Desktop.css";
 import logo from "./assets/loading.svg";
-import shuffle from '../common/helpers/shuffleArray';
+import shuffle from "../common/helpers/shuffleArray";
 
 const MIN_HEIGHT = 360;
 const MIN_WIDTH = 480;
@@ -189,7 +189,12 @@ function App() {
           </div>
           <div className="item-meta">
             <div className="item-date">{item.date || ""}</div>
-            <div className="item-author">{item.source}</div>
+            <div className="item-author">
+              {item.source}
+              { item.author && item.author !== item.source
+                ? `, ${item.author}`
+                : ""}
+            </div>
           </div>
         </div>
       </div>
