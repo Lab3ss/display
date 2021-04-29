@@ -1,6 +1,7 @@
 const mongoose = require('../utils/mongoose');
 
 const itemSchema = mongoose.Schema({
+  type: { type: String, required: true },
   theme: { type: String, required: true },
   source: { type: String, required: false },
   author: { type: String, required: false },

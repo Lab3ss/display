@@ -1,6 +1,8 @@
-const shuffle = data => {
+const shuffle = (data) => {
   const tmpData = [...data];
-  let currentIndex = tmpData.length, temporaryValue, randomIndex;
+  let currentIndex = tmpData.length,
+    temporaryValue,
+    randomIndex;
 
   // While there remain elements to shuffle...
   while (0 !== currentIndex) {

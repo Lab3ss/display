@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSwipeable } from "react-swipeable";
 import axios from "axios";
-import shuffle from '../common/helpers/shuffleArray';
+import shuffle from "../common/helpers/shuffleArray";
 import "./Mobile.css";
 
 import loading from "./assets/loading.svg";
@@ -11,6 +11,7 @@ const FETCH_URL = "api/news";
 
 const DELTA_LEFT = 80;
 const DELTA_RIGHT = 80;
+const DELTA_TOP = 120;
 
 function App() {
   const [ready, setReady] = useState(false);
@@ -19,13 +20,13 @@ function App() {
   const [opacityIndicatorLeft, setOpacityIndicatorLeft] = useState(0);
   const [opacityIndicatorRight, setOpacityIndicatorRight] = useState(0);
   const [likes, setLikes] = useState({});
-  const [dislikes, setDislikes] = useState({});
+  const [showCounters, setShowCounters] = useState(false);
 
   useEffect(() => {
-    document.body.addEventListener("touchmove", function(e) {
+    document.body.addEventListener("touchmove", function (e) {
       e.preventDefault();
     });
-    axios.get(FETCH_URL).then(res => {
+    axios.get(FETCH_URL).then((res) => {
       if (res && res.status === 200 && res.data && res.data.length > 0) {
         setItems(shuffle(res.data));
       }
@@ -33,7 +34,7 @@ function App() {
   }, []);
 
   const swiped = useSwipeable({
-    onSwiping: event => {
+    onSwiping: (event) => {
       switch (event.dir) {
         case "Left":
           setOpacityIndicatorRight(0);
@@ -55,30 +56,36 @@ function App() {
           break;
       }
     },
-    onSwipedLeft: event => {
+    onSwipedLeft: (event) => {
       setOpacityIndicatorLeft(0);
       if (event.absX >= DELTA_LEFT) {
         const theme = items[cursor].theme;
-        if (dislikes[theme]) {
-          setDislikes({...dislikes, [theme]: dislikes[theme] + 1});
+        if (likes[theme] !== undefined) {
+          setLikes({ ...likes, [theme]: likes[theme] - 1 });
         } else {
-          setDislikes({...dislikes, [theme]: 1});
+          setLikes({ ...likes, [theme]: -1 });
         }
         setCursor(cursor + 1);
       }
     },
-    onSwipedRight: event => {
+    onSwipedRight: (event) => {
       setOpacityIndicatorRight(0);
       if (event.absX >= DELTA_RIGHT) {
         const theme = items[cursor].theme;
-        if (likes[theme]) {
-          setLikes({...likes, [theme]: likes[theme] + 1});
+        if (likes[theme] !== undefined) {
+          setLikes({ ...likes, [theme]: likes[theme] + 1 });
         } else {
-          setLikes({...likes, [theme]: 1});
+          setLikes({ ...likes, [theme]: 1 });
         }
         setCursor(cursor + 1);
       }
-    }
+    },
+    onSwipedUp: (event) => {
+      console.log("TOP");
+      if (event.absY >= DELTA_TOP) {
+        setShowCounters(true);
+      }
+    },
   });
 
   function printItem(item) {
@@ -105,7 +112,7 @@ function App() {
             <div className="item-date">{item.date || ""}</div>
             <div className="item-author">
               {item.source}
-              { item.author && item.author !== item.source
+              {item.author && item.author !== item.source
                 ? `, ${item.author}`
                 : ""}
             </div>
@@ -115,7 +122,29 @@ function App() {
     );
   }
 
-  if (ready && items.length > 0) {
+  if (showCounters) {
+    return (
+      <div>
+        <h3>Debug tool - likes counters</h3>
+        <ul>
+          {Object.keys(likes)
+            .sort((a, b) => (likes[a] > likes[b] ? -1 : 1))
+            .map((s) => (
+              <li key={s} style={{ textTransform: "capitalize" }}>
+                {s} : {likes[s]}
+              </li>
+            ))}
+        </ul>
+        <input
+          type="button"
+          value="Retour"
+          onClick={() => {
+            setShowCounters(false);
+          }}
+        />
+      </div>
+    );
+  } else if (ready && items.length > 0) {
     return (
       <div className="container" style={{ height: window.innerHeight }}>
         <div

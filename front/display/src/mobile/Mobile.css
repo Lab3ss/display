@@ -9,10 +9,10 @@
   color: rgb(255, 176, 65);
 }
 .right-color {
-  color: #58D68D;
+  color: #58d68d;
 }
 .top-color {
-  color: #2E86C1;
+  color: #2e86c1;
 }
 .loading {
   display: flex;
@@ -76,7 +76,7 @@
   bottom: 0px;
   width: 1px;
   background-color: rgb(255, 176, 65);
-  box-shadow:1px 0px 3px 3px rgb(255, 176, 65);
+  box-shadow: 1px 0px 3px 3px rgb(255, 176, 65);
 }
 
 .right-swipping-indicator {
@@ -85,8 +85,8 @@
   top: 0px;
   bottom: 0px;
   width: 1px;
-  background-color: #58D68D;
-  box-shadow:-1px 0px 3px 3px #58D68D;
+  background-color: #58d68d;
+  box-shadow: -1px 0px 3px 3px #58d68d;
 }
 
 .item {

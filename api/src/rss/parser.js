@@ -41,6 +41,7 @@ const parser = async ({ name, url }) =>{
           ogImage,
           ogDate,
           author,
+          requestUrl,
           twitterTitle,
           twitterDescription,
           twitterUrl,
@@ -51,12 +52,12 @@ const parser = async ({ name, url }) =>{
         }
       }) => ({
         theme: name,
-        type: ogType,
+        type: 'RSS',
         source: ogSiteName || twitterSite || twitterCreator,
         author: author,
         title: ogTitle || twitterTitle,
         description: cleanHtml(ogDescription || twitterDescription),
-        url: ogUrl || twitterUrl,
+        url: ogUrl || requestUrl || twitterUrl,
         image: ogImage ? ogImage.url : twitterImage ? twitterImage.url : null,
         date: moment(ogDate).isValid()
           ? moment(ogDate).format("x")
@@ -64,9 +65,10 @@ const parser = async ({ name, url }) =>{
           ? moment(articlePublishedTime).format("x")
           : null
       })
-    )
-    .filter(item => item.title && item.image && item.description && item.url);
+    );
+    data = data.filter(item => item.title && item.image && item.description && item.url);
 
+  console.info(`RSS ${name} : ${data.length} items added`);
   await Item.deleteMany({ theme: name });
   await Item.insertMany(data);
 

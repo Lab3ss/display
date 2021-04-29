@@ -10,31 +10,88 @@
     "database": "display",
     "port": 27017
   },
+  "twitter": {
+    "token": "AAAAAAAAAAAAAAAAAAAAALV7%2BAAAAAAA6UdA3hfGVBXKixdRpgv7VfPEcTs%3DJGVpk4abS1Y6vvtcBJU608KPb3t1xy7bGjvWj9m7fD7RFzCGa9"
+  },
   "rss": {
     "sources": [
       {
-        "name": "google",
-        "url": "https://news.google.com/rss?hl=fr&gl=FR&ceid=FR:fr",
-        "cron": "0 0 10,18 * * *",
-        "limit": 50
+        "name": "politique",
+        "url": "https://www.francetvinfo.fr/politique.rss",
+        "cron": "0 0 10 * * *",
+        "limit": 10
+      },
+      {
+        "name": "societe",
+        "url": "https://www.francetvinfo.fr/societe.rss",
+        "cron": "0 0 10 * * *",
+        "limit": 10
+      },
+      {
+        "name": "faits-divers",
+        "url": "https://www.francetvinfo.fr/faits-divers.rss",
+        "cron": "0 0 10 * * *",
+        "limit": 10
+      },
+      {
+        "name": "justice",
+        "url": "https://www.francetvinfo.fr/societe/justice.rss",
+        "cron": "0 0 10 * * *",
+        "limit": 6
+      },
+      {
+        "name": "economie",
+        "url": "https://www.francetvinfo.fr/economie.rss",
+        "cron": "0 0 10 * * *",
+        "limit": 10
+      },
+      {
+        "name": "monde",
+        "url": "https://www.francetvinfo.fr/monde.rss",
+        "cron": "0 0 10 * * *",
+        "limit": 10
       },
       {
         "name": "geek",
         "url": "https://www.journaldugeek.com/feed/",
         "cron": "0 0 10 * * *",
-        "limit": 20
+        "limit": 10
       },
       {
-        "name": "sport",
-        "url": "https://rmcsport.bfmtv.com/rss/info/flux-rss/flux-toutes-les-actualites/",
+        "name": "football",
+        "url": "https://rmcsport.bfmtv.com/rss/football/",
         "cron": "0 0 10 * * *",
-        "limit": 20
+        "limit": 8
+      },
+      {
+        "name": "rugby",
+        "url": "https://rmcsport.bfmtv.com/rss/rugby/",
+        "cron": "0 0 10 * * *",
+        "limit": 6
+      },
+      {
+        "name": "tennis",
+        "url": "https://rmcsport.bfmtv.com/rss/tennis/",
+        "cron": "0 0 10 * * *",
+        "limit": 4
+      },
+      {
+        "name": "people",
+        "url": "https://www.purepeople.com/rss/news_t0.xml",
+        "cron": "0 0 10 * * *",
+        "limit": 10
+      },
+      {
+        "name": "cinema",
+        "url": "http://rss.allocine.fr/ac/actualites/",
+        "cron": "0 0 10 * * *",
+        "limit": 10
       },
       {
         "name": "sante",
         "url": "https://www.futura-sciences.com/rss/sante/actualites.xml",
         "cron": "0 0 10 * * *",
-        "limit": 8
+        "limit": 6
       },
       {
         "name": "environnement",
@@ -49,30 +106,6 @@
         "limit": 5
       },
       {
-        "name": "nature",
-        "url": "https://www.futura-sciences.com/rss/nature/definitions.xml",
-        "cron": "0 0 10 * * *",
-        "limit": 5
-      },
-      {
-        "name": "terre",
-        "url": "https://www.futura-sciences.com/rss/terre/actualites.xml",
-        "cron": "0 0 10 * * *",
-        "limit": 5
-      },
-      {
-        "name": "maths",
-        "url": "https://www.futura-sciences.com/rss/mathematiques/actualites.xml",
-        "cron": "0 0 10 * * *",
-        "limit": 3
-      },
-      {
-        "name": "matiere",
-        "url": "https://www.futura-sciences.com/rss/matiere/definitions.xml",
-        "cron": "0 0 10 * * *",
-        "limit": 3
-      },
-      {
         "name": "espace",
         "url": "https://www.futura-sciences.com/rss/espace/actualites.xml",
         "cron": "0 0 10 * * *",
@@ -81,3 +114,4 @@
     ]
   }
 }
+

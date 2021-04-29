@@ -3,6 +3,7 @@ const moment = require("moment");
 const redis = require("redis");
 const { promisify } = require("util");
 const Item = require("../schemas/Item");
+const Tweet = require("../schemas/Tweet");
 const rssParser = require("../rss/parser");
 
 const redisClient = redis.createClient({ host: config.get("redis.host") });
@@ -33,12 +34,19 @@ function shuffle(array) {
   return array;
 }
 
+const getPaginatedNews = async (req, res) => {
+  const {  } = req.query;
+  
+  console.log(limit, offset, source);
+  return res.send([]);
+}
+
 const getNews = async (req, res) => {
   const { flush } = req.query;
 
   let cache = await getAsync(REDIS_KEY);
   if (!flush && cache) {
-    res.send(JSON.parse(cache));
+    return res.send(JSON.parse(cache));
   }
 
   const sources = config.get("rss.sources");
@@ -52,7 +60,7 @@ const getNews = async (req, res) => {
     }
     sources[i].skip = skip;
   }
-  const data = (
+  const rss = (
     await Promise.all(
       sources.map(source => {
         return Item.find()
@@ -67,13 +75,16 @@ const getNews = async (req, res) => {
       (item, _, self) => self.filter(e => e.title === item.title).length === 1
     );
 
-  for (const item of data) {
+  for (const item of rss) {
     if (item.date) {
       item.date = moment.unix(item.date / 1000).format("ddd, D MMM");
     }
   }
+  
+  const tweets = await Tweet.find()
 
-  const cached = shuffle(data);
+  console.info(`=> Cache updated with ${rss.length} RSS items and ${tweets.length} tweets`)
+  const cached = shuffle([...rss, ...tweets]);
   await setAsync(REDIS_KEY, REDIS_TTL, JSON.stringify(cached));
   res.send(cached);
 };
